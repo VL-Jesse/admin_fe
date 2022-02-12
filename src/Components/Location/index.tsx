@@ -26,7 +26,7 @@ export const Location = ({address, setAddress, locationHandle}: ILocationCompone
   return (
     <Grid>
         <GooglePlacesAutocomplete
-        apiKey="AIzaSyA5bYw5QPkHBBkb5kM02-XcJpgFnOIA25Y"
+        apiKey=""// add api key
         selectProps={{
           address,
           onChange: handleSelect,
