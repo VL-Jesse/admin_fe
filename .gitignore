@@ -12,6 +12,8 @@
 /build
 
 # misc
+
+/.env-cmdrc
 .DS_Store
 .env.local
 .env.development.local
