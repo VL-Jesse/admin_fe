@@ -25,6 +25,7 @@ import { Location } from "../../../Components/Location";
 import { addBusinessSchema } from "./validation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { createBusiness, getEditBusiness, updateBusiness } from "../../../Actions/businessAction";
+import  { geocodeByAddress,getLatLng } from "react-google-places-autocomplete";
 
 
 export const FormBusinesses = () => {
@@ -58,14 +59,22 @@ export const FormBusinesses = () => {
     reset(selectedData.edit);
   }, [selectedData.edit]);
 
-  const validateLocation = (data: IFormPut) => {
+  const validateLocation = async (data: IFormPut) => {
     const location = data.AddressModels[0].location
-    if(!location.latitude || location.longitude) 
-    return false
+    const address = data.AddressModels[0]
+    if(!location.latitude || location.longitude) {
+      const addressLocation = address.addressLine +","+ address.city +","+ address.state +","+address.zipCode as string
+      const locationAddress = await geocodeByAddress(addressLocation)
+      const latLong = await getLatLng(locationAddress[0] )
+      data.AddressModels[0].location.latitude =latLong.lat
+      data.AddressModels[0].location.longitude =latLong.lng
+    }
+    return 
   }
 
   const onSubmit = async (data: IFormPut) => {
-    if(validateLocation(data)) return 
+    if(!data) return 
+    await validateLocation(data)
     if (location.pathname === path.BUSINESSESCREATE) {
       const responsePost: any = await dispatch(createBusiness(data));
       if (responsePost!.payload!.success) {
@@ -97,10 +106,6 @@ export const FormBusinesses = () => {
     navigate(path.BUSINESSES);
   };
 
-  const locationHandle = (location: ILocationParams) => {
-    console.log({location})
-  }
-
   return (
     <Sidebar>
       <Grid container className={classes.formDiv}>
@@ -111,7 +116,7 @@ export const FormBusinesses = () => {
           <Grid container className={classes.form}>
             <Typography variant="subtitle1"> Quick address search: </Typography>
             <FormControl fullWidth>
-            <Location address={address} setAddress={setAddress} locationHandle={locationHandle}/>
+            <Location address={address} setAddress={setAddress} setValue={setValue}/>
             </FormControl>
           </Grid>
           <form onSubmit={handleSubmit(onSubmit)}>
