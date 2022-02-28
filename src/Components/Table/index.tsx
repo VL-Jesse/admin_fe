@@ -118,7 +118,7 @@ export const TableComponet = ({
                   </TableRow>
                 );
               })}
-            {rows === null && (
+            {(rows === null || rows.length === 0) && (
               <TableRow>
                 <TableCell align="center" colSpan={10}>
                   <Typography variant="subtitle1">No available data</Typography>

@@ -32,12 +32,12 @@ export interface IHeaderDeal {
 
 export interface IPaginationBusiness {
   totalCount: number;
-  business: IBusinesses[];
+  business: IBusinesses[] | null;
 }
 
 export interface IBusinessReducer {
   status: "idle" | "loading" | "failed";
-  data: IBusinesses[];
+  data: IBusinesses[] | null;
   edit: IFormPut | null;
   total: number;
   download: IDownloadBusiness[] | string;

@@ -32,9 +32,12 @@ export const businessSlice = createSlice({
       })
       .addCase(fecthBusiness.fulfilled, (state, action) => {
         state.status = "idle";
-        state.data = action.payload.business;
-        state.total = action.payload.totalCount;
+        state.data = action.payload ? action.payload.business : null;
+        state.total = action.payload ? action.payload.totalCount : 0;
         state.edit = null;
+      })
+      .addCase(fecthBusiness.rejected, (state) => {
+        state.status = "failed";
       });
 
     builder.addCase(exportBusiness.fulfilled, (state, action) => {

@@ -5,7 +5,7 @@ import { path } from "../../Routes/path";
 
 export interface ITable {
   headers: IHeaderUser | IHeaderOnlineDeals | IHeaderBusiness;
-  rows: IRows;
+  rows: IRows | null;
   path: path;
   deleteAction: Function;
   fetchFilter: Function;

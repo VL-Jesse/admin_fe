@@ -20,7 +20,7 @@ export interface IDownloadOnlineDeals {
 }
 export interface IOnlineDealsReducer {
   status: "idle" | "loading" | "failed";
-  data: IOnlineDeals[];
+  data: IOnlineDeals[] | null;
   edit: IOnlineDealEdit | null;
   total: number;
   download: IDownloadOnlineDeals | string;

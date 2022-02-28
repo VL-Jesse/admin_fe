@@ -34,8 +34,8 @@ export const onlineDealsSlice = createSlice({
       })
       .addCase(fecthOnlineDeals.fulfilled, (state, action) => {
         state.status = "idle";
-        state.data = action.payload.onlineDeals;
-        state.total = action.payload.totalCount;
+        state.data = action.payload ? action.payload.onlineDeals : null;
+        state.total = action.payload ? action.payload.totalCount : 0;
         state.edit = null;
       });
 
