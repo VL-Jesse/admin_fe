@@ -32,8 +32,8 @@ export const userSlice = createSlice({
       })
       .addCase(getAllData.fulfilled, (state, action) => {
         state.status = "idle";
-        state.data = action.payload.page;
-        state.total = action.payload.total;
+        state.data = action.payload ? action.payload.page : null;
+        state.total = action.payload ? action.payload.total : 0;
         state.edit = null;
       })
       .addCase(getAllData.rejected, (state) => {
