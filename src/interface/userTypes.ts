@@ -20,7 +20,7 @@ export interface IPaginationUser {
 
 export interface IUserReducer {
   status: "idle" | "loading" | "failed";
-  data: IUsers[];
+  data: IUsers[] | null;
   edit: IUsers | null;
   total: number;
   download: IDownloadUser | string;
