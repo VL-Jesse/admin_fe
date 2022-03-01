@@ -66,6 +66,7 @@ export const FormOnlineDeals = () => {
           message: "Online deal created",
           type: "success",
         });
+        return navigate(path.ONLINEDEALS);
       }
     }
     if (location.pathname === path.ONLINEDEALSEDIT) {
@@ -78,9 +79,9 @@ export const FormOnlineDeals = () => {
           message: "Online deal edited",
           type: "success",
         });
+        return navigate(path.ONLINEDEALS);
       }
     }
-    return navigate(path.ONLINEDEALS);
   };
 
   const backHandler = () => {
