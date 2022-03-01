@@ -4,19 +4,17 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import { message } from "../../../utils/message";
 import { useStyles } from "../styles";
 import { IFormParams, IHeaderDeal } from "../../../interface/businessTypes";
 import { Controller } from "react-hook-form";
 import { dealsTitle } from "../../../utils/deals";
-import { v4 as uuidv4 } from "uuid";
 
 export const FormDeals = ({ register, errors, control, setValue }: IFormParams) => {
   const classes = useStyles();
   
   const dealForm = (id: number, title: string) => {
     return (
-      <Grid key={uuidv4()}>
+      <Grid key={`grid-${title}`}>
          <Typography variant="h6" className={classes.subtitle}>
         {title}:
       </Typography>
