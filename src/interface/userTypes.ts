@@ -76,3 +76,12 @@ export interface IDownloadUser {
   MembershipExpirationDate: string;
   ComplimentaryExpirationDate: string;
 }
+
+export interface IDealYup{
+  title: string;
+  maxMoneyAmount: number;
+  disclaimer: string;
+  shortDescription: string;
+  isUnlimited: boolean;
+  orderIndex: number
+}

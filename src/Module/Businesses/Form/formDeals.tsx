@@ -34,6 +34,7 @@ export const FormDeals = ({ register, errors, control, setValue }: IFormParams) 
           fullWidth
           variant={"outlined"}
           type={"number"}
+          onKeyDown={(e) =>["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}
           error={!!errors.dealModels?.[id]?.maxMoneyAmount}
           {...register(`dealModels.${id}.maxMoneyAmount`)}
           helperText={errors.dealModels?.[id]?.maxMoneyAmount?.message}
