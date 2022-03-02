@@ -106,7 +106,7 @@ export const FormUser = () => {
             />
             </Grid>
             <Button variant="contained" color="primary" type="submit">
-              {location.pathname === path.USERCREATE ? "Add": "Edit"} new user
+              {location.pathname === path.USERCREATE ? "Add new": "Edit"}  user
             </Button>
           </form>
           <Grid>

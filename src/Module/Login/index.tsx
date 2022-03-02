@@ -11,6 +11,7 @@ import { getToken } from "../../utils/getToken";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "./validation";
 import { authLogin } from "../../Actions/authActions";
+import { Notification } from "../../Components/Notification";
 
 export const Login = () => {
   const classes = useStyles();
@@ -35,8 +36,15 @@ export const Login = () => {
     navigate(path.HOME)
   },[authToken])
   
-  const onSubmit = (data: IAuthParams) => {
-    dispatch(authLogin(data));
+  const onSubmit = async (data: IAuthParams) => {
+    const response: any = await dispatch(authLogin(data));
+    if (response.payload!.isAxiosError) {
+      Notification({
+        title: "Warning",
+        message: "Invalid Credentials",
+        type: "warning",
+      });
+    }
   };
   
   return (

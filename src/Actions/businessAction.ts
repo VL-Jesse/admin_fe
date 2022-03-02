@@ -11,6 +11,7 @@ import {
 } from "../service/businessService";
 import { BusinessTransform } from "../utils/businessTransform";
 import { dateFormat } from "../utils/dateFormat";
+import { exitsModel } from "../utils/exitsModel";
 
 export const fecthBusiness = createAsyncThunk(
   "business/fetch",
@@ -28,7 +29,8 @@ export const createBusiness = createAsyncThunk(
   "business/create",
   async (data: IFormPut, { rejectWithValue }) => {
     try {
-      const newData = dateFormat(data);
+      const dateFormatData = dateFormat(data);
+      const newData =  exitsModel(dateFormatData)
       const response = await postBusiness(newData);
       return response;
     } catch (err) {
@@ -41,7 +43,8 @@ export const updateBusiness = createAsyncThunk(
   async (data: IFormPut, { rejectWithValue }) => {
     try {
       if (!data.businessAddressId) return;
-      const newData = dateFormat(data);
+      const dateFormatData = dateFormat(data);
+      const newData =  exitsModel(dateFormatData)
       const response = await putBusiness(newData, data.businessAddressId);
       return response;
     } catch (err) {
