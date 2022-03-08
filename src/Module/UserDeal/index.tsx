@@ -53,7 +53,6 @@ export const UserDeal = () => {
   }
 
   const fetchFilter = (rowsPerPage: number, page:number) => {
-    debugger
       if(!idUser) {
           return navigate(path.USER)
       }

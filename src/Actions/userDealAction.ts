@@ -11,7 +11,6 @@ export const fetchUserDeal = createAsyncThunk(
         deal.deal_id[0]["userDealId"] = deal.id
         return deal.deal_id[0]
       })
-      debugger
       return {
         data: newDeal,
         total: response.totalCount

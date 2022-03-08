@@ -24,7 +24,6 @@ export const userDealsSlice = createSlice({
       })
       .addCase(fetchUserDeal.fulfilled, (state, action) => {
         state.status = "idle";
-        debugger
         state.data = action.payload ? action.payload.data : null;
         state.total = action.payload ? action.payload.total : 0;
       })

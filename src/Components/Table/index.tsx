@@ -40,7 +40,6 @@ export const TableComponet = ({
   const navigate = useNavigate();
 
   useEffect(() => {
-    debugger
     fetchFilter(rowsPerPage, page, fetchFilter);
   }, []);
 
