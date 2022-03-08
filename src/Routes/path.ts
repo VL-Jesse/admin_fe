@@ -11,4 +11,5 @@ export enum path {
   ONLINEDEALSEDIT = "/online-deals/edit",
   ONLINEDEALSCREATE = "/online-deals/create",
   LOGOUT = "/logout",
+  USERDEAL = "/userdeal"
 }

@@ -33,11 +33,14 @@ export const TableComponet = ({
   setPage,
   setRowsPerPage,
   filter,
+  action,
+  updateAction = true,
 }: ITable) => {
   const classes = useStyles();
   const navigate = useNavigate();
 
   useEffect(() => {
+    debugger
     fetchFilter(rowsPerPage, page, fetchFilter);
   }, []);
 
@@ -76,11 +79,20 @@ export const TableComponet = ({
                   </TableCell>
                 );
               })}
-              <TableCell key={uuidv4()} align="center">
-                <Typography variant="subtitle1" className={classes.title}>
-                  Edit
-                </Typography>
-              </TableCell>
+              {action && action.available && (
+                <TableCell key={uuidv4()} align="center">
+                  <Typography variant="subtitle1" className={classes.title}>
+                    {action.actionTitle}
+                  </Typography>
+                </TableCell>
+              )}
+              {updateAction && (
+                <TableCell key={uuidv4()} align="center">
+                  <Typography variant="subtitle1" className={classes.title}>
+                    Edit
+                  </Typography>
+                </TableCell>
+              )}
               <TableCell key={uuidv4()} align="center">
                 <Typography variant="subtitle1" className={classes.title}>
                   Delete
@@ -100,13 +112,26 @@ export const TableComponet = ({
                         </TableCell>
                       );
                     })}
-                    <TableCell key={uuidv4()} align="center">
-                      <IconButton
-                        onClick={() => navigate(`${path}?id=${row[idName]}`)}
-                      >
-                        <RiEdit2Line size={20} color={defaultColor.darkGray} />
-                      </IconButton>
-                    </TableCell>
+                    {action && action.available && (
+                      <TableCell key={uuidv4()} align="center">
+                        <IconButton onClick={() => action.action(row[idName])}>
+                          {action.iconAction}
+                        </IconButton>
+                      </TableCell>
+                    )}
+                    {updateAction && (
+                      <TableCell key={uuidv4()} align="center">
+                        <IconButton
+                          onClick={() => navigate(`${path}?id=${row[idName]}`)}
+                        >
+                          <RiEdit2Line
+                            size={20}
+                            color={defaultColor.darkGray}
+                          />
+                        </IconButton>
+                      </TableCell>
+                    )}
+
                     <TableCell key={uuidv4()} align="center">
                       <IconButton onClick={() => deleteAction(row[idName])}>
                         <RiDeleteBin6Line
