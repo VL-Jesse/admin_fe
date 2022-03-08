@@ -34,7 +34,7 @@ export const UserDeal = () => {
     if (!id) return;
     if (response) {
       const response: any = await dispatch(deleteUserDeals(id));
-      if (response.payload!.status === 200) {
+      if (!response.payload!.isAxiosError) {
         Notification({
           title: "Success",
           message: "User deleted",
