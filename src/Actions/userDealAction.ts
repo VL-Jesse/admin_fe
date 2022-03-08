@@ -21,9 +21,13 @@ export const fetchUserDeal = createAsyncThunk(
 
   export const  deleteUserDeals = createAsyncThunk(
     "userdeal/delete",
-    async (id: string | number) => {
-      const response = await deleteUserDealService(id)
+    async (id: string | number, {rejectWithValue}) => {
+      try {
+        const response = await deleteUserDealService(id)
       return response
+      } catch(e){
+        return rejectWithValue(e)
+      }
     }
   );
   

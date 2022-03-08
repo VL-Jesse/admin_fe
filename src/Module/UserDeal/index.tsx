@@ -10,23 +10,26 @@ import { useMemo, useState } from "react";
 import { useAppDispatch } from "../../app/hooks";
 import { FormDialog } from "../../Components/FormDialog";
 import { Notification } from "../../Components/Notification";
-import { deleteUserDeals, fetchUserDeal} from "../../Actions/userDealAction";
+import { deleteUserDeals, fetchUserDeal } from "../../Actions/userDealAction";
 import { useQuery } from "../../utils/getQuery";
 import { clearDeals } from "../../Reducer/userDealReducer";
 import { IoReturnDownBack } from "react-icons/io5";
 import { IHeaderUserDeals } from "../../interface/userDealTypes";
 
-const headers: IHeaderUserDeals = { title:"Deal", short_description: "Short description" }
+const headers: IHeaderUserDeals = {
+  title: "Deal",
+  short_description: "Short description",
+};
 
 export const UserDeal = () => {
   const classes = useStyles();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { search } = useLocation();
   const idUser = useQuery(search, "id");
-  const dataRows = useSelector((state: RootState ) => state.userDeals)
-  const [ open, setOpen ] = useState<boolean>(false);
-  const [ id, setId ] = useState<number | string>()
+  const dataRows = useSelector((state: RootState) => state.userDeals);
+  const [open, setOpen] = useState<boolean>(false);
+  const [id, setId] = useState<number | string | null>();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -47,57 +50,61 @@ export const UserDeal = () => {
   };
 
   const deleteAction = (id: string | number) => {
-    if(!id) return
-    setOpen(true)
-    setId(id)
-  }
+    if (!id) return;
+    setOpen(true);
+    setId(id);
+  };
 
-  const fetchFilter = (rowsPerPage: number, page:number) => {
-      if(!idUser) {
-          return navigate(path.USER)
-      }
-    dispatch(fetchUserDeal({id: idUser, rowsPerPage, page}))
-  }
+  const fetchFilter = (rowsPerPage: number, page: number) => {
+    if (!idUser) {
+      return navigate(path.USER);
+    }
+    dispatch(fetchUserDeal({ id: idUser, rowsPerPage, page }));
+  };
 
   const backHandler = () => {
     dispatch(clearDeals());
     return navigate(path.USER);
   };
 
-  return useMemo(() =>(
-    <Sidebar>
-      <Grid className={classes.container}>
-        <Grid container className={classes.headerContainer}>
+  return useMemo(
+    () => (
+      <Sidebar>
+        <Grid className={classes.container}>
+          <Grid container className={classes.headerContainer}>
             <Grid>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => backHandler()}
-              startIcon={<IoReturnDownBack/>}
-            >Back to Users
-            </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => backHandler()}
+                startIcon={<IoReturnDownBack />}
+              >
+                Back to Users
+              </Button>
+            </Grid>
           </Grid>
+          <Grid item xs={12}>
+            <TableComponet
+              headers={headers}
+              rows={dataRows.data}
+              path={undefined}
+              deleteAction={deleteAction}
+              fetchFilter={fetchFilter}
+              idName="userDealId"
+              total={dataRows.total}
+              page={page}
+              rowsPerPage={rowsPerPage}
+              setPage={setPage}
+              setRowsPerPage={setRowsPerPage}
+              filter={""}
+              action={undefined}
+              updateAction={false}
+            />
+          </Grid>
+          <FormDialog open={open} validateAction={validateAction} />
         </Grid>
-        <Grid item xs={12}>
-        <TableComponet
-            headers={headers}
-            rows={dataRows.data}
-            path={undefined}
-            deleteAction={deleteAction}
-            fetchFilter={fetchFilter}
-            idName="userDealId"
-            total={dataRows.total}
-            page={page}
-            rowsPerPage={rowsPerPage}
-            setPage={setPage}
-            setRowsPerPage={setRowsPerPage}
-            filter={""}
-            action={undefined}
-            updateAction={false}
-          />
-        </Grid>
-        <FormDialog open={open} validateAction={validateAction}/>
-      </Grid>
-    </Sidebar>
-  ),[idUser, dataRows]);
+      </Sidebar>
+    ),
+    [idUser, dataRows, open]
+  );
 };
