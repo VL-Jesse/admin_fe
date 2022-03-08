@@ -17,6 +17,7 @@ import { Notification } from "../../Components/Notification";
 import { CSVLink } from "react-csv";
 import { defaultColor } from "../../Styles/defaultStyles";
 import { deleteUser, exportUser, getAllData } from "../../Actions/userAction";
+import { BsList } from "react-icons/bs";
 
 const headers: IHeaderUser = {
   firstName: "First Name",
@@ -70,6 +71,11 @@ export const Users = () => {
     navigate(path.USERCREATE);
   };
 
+  
+  const actionTable = (id: number | string) => {
+    return navigate(`${path.USERDEAL}?id=${id}`)
+  }
+
   return (
     <Sidebar>
       <Grid className={classes.container}>
@@ -118,6 +124,12 @@ export const Users = () => {
             setPage={setPage}
             setRowsPerPage={setRowsPerPage}
             filter={filter}
+            action={{
+                available:true,
+                action:actionTable,
+                actionTitle:"Deal",
+                iconAction:<BsList size={20} color={defaultColor.darkGray}/>
+              }}
           />
         </Grid>
         <Grid className={classes.container}>

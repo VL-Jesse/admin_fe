@@ -3,3 +3,9 @@ export interface IFilter {
   page?: number;
   filter?: string;
 }
+
+export interface IFilterById {
+  id: number | string;
+  rowsPerPage?: number;
+  page?: number;
+}
