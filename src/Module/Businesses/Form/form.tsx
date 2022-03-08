@@ -161,7 +161,7 @@ export const FormBusinesses = () => {
               color="secondary"
               startIcon={<IoReturnDownBack />}
             >
-              Back to Online Deals
+              Back to Business
             </Button>
           </Grid>
         </Paper>
