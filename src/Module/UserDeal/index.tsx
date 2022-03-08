@@ -37,7 +37,7 @@ export const UserDeal = () => {
       if (!response.payload!.isAxiosError) {
         Notification({
           title: "Success",
-          message: "User deleted",
+          message: "User deal deleted",
           type: "success",
         });
         return navigate(0);
