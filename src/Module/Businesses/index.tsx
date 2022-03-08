@@ -42,7 +42,7 @@ export const Business = () => {
       if (response.payload!.status === 200) {
         Notification({
           title: "Success",
-          message: "User deleted",
+          message: "Business deleted",
           type: "success",
         });
         return navigate(0);
