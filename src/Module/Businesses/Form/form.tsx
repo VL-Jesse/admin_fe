@@ -11,7 +11,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { RootState } from "../../../app/store";
 import { Sidebar } from "../../../Components/Sidebar";
-import {  IFormPut, ILocationParams } from "../../../interface/businessTypes";
+import {  IFormPut } from "../../../interface/businessTypes";
 import { clearEditBusiness } from "../../../Reducer/businessReducer";
 import { path } from "../../../Routes/path";
 import { useQuery } from "../../../utils/getQuery";
@@ -49,7 +49,7 @@ export const FormBusinesses = () => {
 
   useEffect(() => {
     if (location.pathname === path.BUSINESSESEDIT && !id) {
-      return navigate(path.USER);
+      return navigate(path.BUSINESSES);
     }
     if (id) dispatch(getEditBusiness(id));
   }, []);

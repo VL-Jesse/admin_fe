@@ -4,13 +4,15 @@ import userReducer from '../Reducer/userReducer';
 import onlineDealsReducer from '../Reducer/onlineDealsReducer';
 import businessReducer from '../Reducer/businessReducer';
 import authReducer from '../Reducer/authReducer';
+import userDealReducer from '../Reducer/userDealReducer';
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
     onlineDeals: onlineDealsReducer,
     business: businessReducer,
-    auth: authReducer
+    auth: authReducer,
+    userDeals: userDealReducer
   },
 });
 

@@ -102,6 +102,7 @@ export const OnlineDeals = () => {
             setPage={setPage}
             setRowsPerPage={setRowsPerPage}
             filter={filter}
+            action={undefined}
           />
         </Grid>
         <Grid className={classes.container}>

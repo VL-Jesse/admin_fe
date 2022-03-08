@@ -27,8 +27,10 @@ export const authSlice = createSlice({
       .addCase(authLogin.fulfilled, (state, action) => {
         state.status = "idle";
         state.data = action.payload;
+      })
+      .addCase(authLogin.rejected, (state, action) => {
+        state.status = "failed";
       });
-
     builder  
       .addCase(refreshingLogin.pending, (state) => {
         state.isRefreshing = true;

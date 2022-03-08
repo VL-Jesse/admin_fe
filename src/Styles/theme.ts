@@ -10,7 +10,7 @@ export const theme = createTheme({
     },
     text:{
       secondary: defaultColor.darkGray,
-    }
+    },
   },
   props: {
     MuiInputBase: {

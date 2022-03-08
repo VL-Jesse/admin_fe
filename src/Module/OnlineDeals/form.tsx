@@ -66,6 +66,7 @@ export const FormOnlineDeals = () => {
           message: "Online deal created",
           type: "success",
         });
+        return navigate(path.ONLINEDEALS);
       }
     }
     if (location.pathname === path.ONLINEDEALSEDIT) {
@@ -78,9 +79,9 @@ export const FormOnlineDeals = () => {
           message: "Online deal edited",
           type: "success",
         });
+        return navigate(path.ONLINEDEALS);
       }
     }
-    return navigate(path.ONLINEDEALS);
   };
 
   const backHandler = () => {
@@ -100,34 +101,13 @@ export const FormOnlineDeals = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <Grid className={classes.form}>
               <Typography variant="subtitle1"> Business Name: </Typography>
-              <FormControl fullWidth >
-                <Controller
-                  control={control}
-                  name="businessName"
-                  render={({ field }) =>(
-                    <Autocomplete
-                      disableClearable
-                      {...field}
-                      value={field.value ?? ""}
-                      onChange={(_, data) => field.onChange(data)}
-                      getOptionLabel={(option) => option}
-                      options={selectedData.businessNames ?? []}
-                      renderInput={(params) => 
-                          <TextField
-                          error={!!errors["businessName"]}
-                          helperText={errors["businessName"]?.message}
-                            {...params}
-                            InputProps={{
-                              ...params.InputProps,
-                              type: "search",
-                            }}
-                            variant="outlined"
-                          />
-                      }
-                    />
-                  )}
-                />
-              </FormControl>
+              <TextField
+                fullWidth
+                error={!!errors["businessName"]}
+                variant={"outlined"}
+                {...register("businessName")}
+                helperText={errors["businessName"]?.message}
+              />
               <Typography variant="subtitle1"> Online Deal: </Typography>
               <TextField
                 fullWidth
