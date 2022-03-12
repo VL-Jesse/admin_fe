@@ -44,7 +44,7 @@ export const Sidebar = ({ children }: Props) => {
           [classes.appBarShift]: open,
         })}
       >
-        <Toolbar disableGutters={!open}>
+        <Toolbar disableGutters={!open} className={classes.hidden}>
           <IconButton
             color="inherit"
             aria-label="Open drawer"
