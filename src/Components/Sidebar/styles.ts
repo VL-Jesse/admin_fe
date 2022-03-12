@@ -92,5 +92,8 @@ root: {
     display: 'flex',
     flexDirection: 'row',
     placeItems: "center",
+  },
+  hidden: {
+    overflow: "hidden"
   }
 }));
