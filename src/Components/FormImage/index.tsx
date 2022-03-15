@@ -7,6 +7,8 @@ import { useStyles } from "./styles";
 import { useForm } from "react-hook-form";
 import { Grid, TextField, Typography } from "@material-ui/core";
 import { postPhotoService } from "../../service/uploadPhoto";
+import { Notification } from "../../Components/Notification";
+
 
 export const FormImage = ({ open, setOpen, service, setUrl }: IFormImage) => {
   const classes = useStyles();
@@ -18,10 +20,8 @@ export const FormImage = ({ open, setOpen, service, setUrl }: IFormImage) => {
 
   const onSubmit = async (form: any) => {
     const type = form.file[0].type as string;
-    const formData = new FormData();
     if (!type.includes("image")) return 
     const newExtension = type.replace("image/", "") as string;
-    formData.append("file",form.file[0]);
     const convertedFile = await convertToBase64(form.file[0]);
     const data:IFormImageData  = {
     extension: newExtension,
@@ -32,7 +32,12 @@ export const FormImage = ({ open, setOpen, service, setUrl }: IFormImage) => {
     const response = await postPhotoService(data)
     if(response.url){
     setUrl(response.url)
-    setOpen(false)
+    Notification({
+        title: "Success",
+        message: "Uploade photo",
+        type: "success",
+      });
+      return setOpen(false)
     }
   };
 
@@ -57,7 +62,7 @@ export const FormImage = ({ open, setOpen, service, setUrl }: IFormImage) => {
         <DialogActions className={classes.container}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container className={classes.form}>
-              <Typography variant="h5">Description</Typography>
+              <Typography variant="subtitle1">Description</Typography>
               <TextField
                 fullWidth
                 variant={"outlined"}
@@ -65,7 +70,7 @@ export const FormImage = ({ open, setOpen, service, setUrl }: IFormImage) => {
                 {...register("description")}
                 helperText={errors["description"]?.message}
               />
-              <Typography variant="h5">Photo</Typography>
+              <Typography variant="subtitle1">Photo</Typography>
               <input
                 color="primary"
                 accept="image/*"
