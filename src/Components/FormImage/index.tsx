@@ -21,11 +21,11 @@ export const FormImage = ({ open, setOpen, service, setUrl }: IFormImage) => {
     const formData = new FormData();
     if (!type.includes("image")) return 
     const newExtension = type.replace("image/", "") as string;
-    formData.append("file",form.file);
+    formData.append("file",form.file[0]);
     const data:IFormImageData  = {
     extension: newExtension,
     description: form.description,
-    file: formData as any,
+    file: form.file[0],
     service 
     }
     const response = await postPhotoService(data)
