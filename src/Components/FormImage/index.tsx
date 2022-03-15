@@ -22,10 +22,11 @@ export const FormImage = ({ open, setOpen, service, setUrl }: IFormImage) => {
     if (!type.includes("image")) return 
     const newExtension = type.replace("image/", "") as string;
     formData.append("file",form.file[0]);
+    const convertedFile = await convertToBase64(form.file[0]);
     const data:IFormImageData  = {
     extension: newExtension,
     description: form.description,
-    file: form.file[0],
+    file: convertedFile as any,
     service 
     }
     const response = await postPhotoService(data)
@@ -35,6 +36,15 @@ export const FormImage = ({ open, setOpen, service, setUrl }: IFormImage) => {
     }
   };
 
+  const convertToBase64 = (file: any) => {
+    return new Promise(resolve => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            resolve(reader.result);
+        }
+    })
+}
 
   return (
     <div>
