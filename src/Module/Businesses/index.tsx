@@ -16,6 +16,7 @@ import { defaultColor } from "../../Styles/defaultStyles";
 import { CSVLink } from "react-csv";
 import { Notification } from "../../Components/Notification";
 import { deleteBusiness, exportBusiness, fecthBusiness } from "../../Actions/businessAction";
+import { FormImage } from "../../Components/FormImage";
 
 
 export const Business = () => {

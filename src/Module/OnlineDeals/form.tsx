@@ -20,12 +20,13 @@ import { clearEditOnlineDeal } from "../../Reducer/onlineDealsReducer";
 import { path } from "../../Routes/path";
 import { useQuery } from "../../utils/getQuery";
 import { useStyles } from "./styles";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Notification } from "../../Components/Notification";
 import { Autocomplete } from "@material-ui/lab";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { dealSchema } from "./validation";
 import { createOnlineDeals, getBussinessName, getEditOnlineDeal, updateOnlineDeals } from "../../Actions/onlineDealAction";
+import { FormImage } from "../../Components/FormImage";
 
 export const FormOnlineDeals = () => {
   const { search } = useLocation();
@@ -35,6 +36,8 @@ export const FormOnlineDeals = () => {
   const classes = useStyles();
   const id = useQuery(search, "id");
   const selectedData = useAppSelector((state: RootState) => state.onlineDeals);
+ const [ open, setOpen ] = useState<boolean>(false);
+  const [ urlPhoto, setUrlPhoto ] = useState<string>("");
 
   const {
     handleSubmit,
@@ -58,6 +61,7 @@ export const FormOnlineDeals = () => {
   }, [selectedData.edit]);
 
   const onSubmit = async (data: IOnlineDealEdit | IFormPost) => {
+    if(!data) return 
     if (location.pathname === path.ONLINEDEALSCREATE) {
       const responsePost: any = await dispatch(createOnlineDeals(data));
       if (responsePost!.payload!.success) {
@@ -144,11 +148,20 @@ export const FormOnlineDeals = () => {
                 {...register("url")}
               />
             </Grid>
+            <Typography variant="subtitle1"> Cover Photo: </Typography>
+            <Grid className={classes.form}>
+            <Typography variant="subtitle1"> Cover Photo: </Typography>
+            <Button variant="outlined" color="secondary" onClick={()=>setOpen(true)}>
+              Browse
+            </Button>
+            </Grid>
+
             <Button variant="contained" color="primary" type="submit">
               {location.pathname === path.ONLINEDEALSCREATE ? "Add" : "Edit"}{" "}
               New Online Deal
             </Button>
           </form>
+          <FormImage open={open} setOpen={setOpen} service="online-deals" setUrl={setUrlPhoto}/>
           <Grid>
             <Button
               variant="text"
