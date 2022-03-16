@@ -60,7 +60,6 @@ export const FormOnlineDeals = () => {
 
   const onSubmit = async (data: IOnlineDealEdit | IFormPost) => {
     if(!data) return 
-    debugger
     data.imageFile = urlPhoto ?? "";
     if (location.pathname === path.ONLINEDEALSCREATE) {
       const responsePost: any = await dispatch(createOnlineDeals(data));
