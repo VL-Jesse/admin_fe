@@ -42,6 +42,7 @@ export interface IUserRequest {
   complimentaryEndDate: string;
   birthDate: string;
   state: string;
+  free_membership: boolean;
 }
 
 export interface IEditUser {

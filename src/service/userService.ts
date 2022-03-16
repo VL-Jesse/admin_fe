@@ -38,8 +38,8 @@ const userDealIds = update.dealsModels ? update.dealsModels.map((deal: IDealMode
     userDealIdsToRemove: userDealIds,
     complimentaryEndDate: update.complimentaryEndDate,
     birthDate: update.birthDate,
-    state: update.state
-
+    state: update.state,
+    free_membership: update.free_membership
   }
   const data = await axiosInstance.put(`/api/users/${id}/edit`, dataUser);
   return data
