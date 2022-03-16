@@ -62,7 +62,7 @@ export const FormOnlineDeals = () => {
   }, [selectedData.edit]);
 
   const deleteImage = (images: IImage): number[] => {
-    if(images && images.itemHash === urlPhoto && urlPhoto !== ""){
+    if(images && images.itemHash !== urlPhoto && urlPhoto !== ""){
       return [images.id]
     }
     return [];
