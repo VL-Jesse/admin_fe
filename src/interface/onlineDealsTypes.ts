@@ -57,6 +57,7 @@ export interface IOnlineDealPost {
   PromoCode: string;
   Url: string;
   imageFile: string;
+  ImageIdsToDelete: number[] | null;
 }
 export interface IFormPost {
   businessName: string;
