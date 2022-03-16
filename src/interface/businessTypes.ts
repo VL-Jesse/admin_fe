@@ -1,3 +1,4 @@
+import { IImage } from "./onlineDealsTypes";
 import { IResponseError, IResponseMessages } from "./responseType";
 export interface IBusinesses {
   id: number;
@@ -127,6 +128,7 @@ export interface IFormPut {
   AddressModels: IAddressModelsJson[];
   dealModels: IDealModels[];
   imageFile: string;
+  images: IImage[];
 }
 
 export interface IEditData {
@@ -141,7 +143,7 @@ export interface IEditData {
   contactPhone: string;
   addressModels: IAddressModels[];
   dealsModels: IDealModels[];
-  imageFile: string
+  imageFile: string;
 }
 
 export interface IAddressModels {
@@ -151,15 +153,8 @@ export interface IAddressModels {
   state: string;
   zipCode: string;
   workingHours: IWorkingHours[];
-  images: IImages[];
+  images: IImage[];
 }
-
-export interface IImages {
-  id: number;
-  itemHash: string;
-  extension: string;
-}
-
 
 export interface ILocationParams {
   addressLine: string;

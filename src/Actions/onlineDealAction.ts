@@ -14,7 +14,6 @@ import {
   postOnlineDeals,
   putOnlineDeals,
 } from "../service/onlineDealService";
-import { onlineDealsFormat } from "../utils/onlineDealsFormat";
 
 export const fecthOnlineDeals = createAsyncThunk(
   "onlineDeals/fetch",
@@ -33,8 +32,7 @@ export const getEditOnlineDeal = createAsyncThunk(
   async (id: string | number, { rejectWithValue }) => {
     try {
       const response = await getOneOnlineDeals(id);
-      const newformatResponse = onlineDealsFormat(response);
-      return newformatResponse;
+      return response;
     } catch (err) {
       return rejectWithValue(err);
     }

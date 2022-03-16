@@ -31,6 +31,7 @@ import {
 } from "../../../Actions/businessAction";
 import { geocodeByAddress, getLatLng } from "react-google-places-autocomplete";
 import { FormImage } from "../../../Components/FormImage";
+import { IImage } from "../../../interface/imageType";
 
 export const FormBusinesses = () => {
   const { search } = useLocation();
@@ -87,32 +88,44 @@ export const FormBusinesses = () => {
     return;
   };
 
+  const deleteImage = (images: IImage[]): number[] => {
+    if (!images)  return [];
+    let result: number[] = []
+     images.forEach((img: IImage) => {
+      if(img.itemHash === urlPhoto && urlPhoto !== "") {
+        result.push(img.id)
+      }
+    })
+    return result
+  };
+
   const onSubmit = async (data: IFormPut) => {
     if (!data) return;
     data.imageFile = urlPhoto ?? "";
+    data.ImageIdsToDelete = deleteImage(data.images);
     await validateLocation(data);
-    if (location.pathname === path.BUSINESSESCREATE) {
-      const responsePost: any = await dispatch(createBusiness(data));
-      if (responsePost!.payload!.success) {
-        Notification({
-          title: "Success",
-          message: "Business created",
-          type: "success",
-        });
-        return navigate(path.BUSINESSES);
-      }
-    }
-    if (location.pathname === path.BUSINESSESEDIT) {
-      const responsePut: any = await dispatch(updateBusiness(data));
-      if (responsePut!.payload!.status === 200) {
-        Notification({
-          title: "Success",
-          message: "Business edited",
-          type: "success",
-        });
-        return navigate(path.BUSINESSES);
-      }
-    }
+    // if (location.pathname === path.BUSINESSESCREATE) {
+    //   const responsePost: any = await dispatch(createBusiness(data));
+    //   if (responsePost!.payload!.success) {
+    //     Notification({
+    //       title: "Success",
+    //       message: "Business created",
+    //       type: "success",
+    //     });
+    //     return navigate(path.BUSINESSES);
+    //   }
+    // }
+    // if (location.pathname === path.BUSINESSESEDIT) {
+    //   const responsePut: any = await dispatch(updateBusiness(data));
+    //   if (responsePut!.payload!.status === 200) {
+    //     Notification({
+    //       title: "Success",
+    //       message: "Business edited",
+    //       type: "success",
+    //     });
+    //     return navigate(path.BUSINESSES);
+    //   }
+    // }
   };
 
   const backHandler = () => {
@@ -165,14 +178,14 @@ export const FormBusinesses = () => {
             <Typography variant="h5" className={classes.title}>
               Assets
             </Typography>
-            {selectedData.edit?.imageFile && (
+            {selectedData.edit?.images?.[0].itemHash && (
               <Paper
                 variant="elevation"
                 elevation={3}
                 className={classes.paperImage}
               >
                 <img
-                  src={selectedData.edit?.imageFile}
+                  src={selectedData.edit?.images[0].itemHash}
                   title="logo"
                   alt="Cover Photo"
                   className={classes.imageContainer}
