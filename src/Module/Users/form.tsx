@@ -1,5 +1,5 @@
-import { Button, Grid, Paper, TextField, Typography } from "@material-ui/core";
-import { useForm } from "react-hook-form";
+import { Button, Checkbox, Grid, Paper, TextField, Typography } from "@material-ui/core";
+import { Controller, useForm } from "react-hook-form";
 import { IoReturnDownBack } from "react-icons/io5";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
@@ -30,7 +30,8 @@ export const FormUser = () => {
     handleSubmit,
     formState: { errors },
     register,
-    reset
+    reset,
+    control
   } = useForm({ defaultValues: { ...userSelected as IEditUser }, resolver: yupResolver(addUserSchema)});
   
   useEffect(()=> {
@@ -104,6 +105,14 @@ export const FormUser = () => {
               helperText={errors["email"]?.message}
               {...register("email")}
             />
+            <Typography variant="subtitle1"> Free Membership: </Typography>
+            <Controller
+            name={`free_membership`}
+            control={control}
+            defaultValue={false}
+            rules={{ required: false }}
+            render={({ field }) => <Checkbox {...field} checked={field.value}/>}
+          />
             </Grid>
             <Button variant="contained" color="primary" type="submit">
               {location.pathname === path.USERCREATE ? "Add new": "Edit"}  user

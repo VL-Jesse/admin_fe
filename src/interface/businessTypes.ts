@@ -123,7 +123,7 @@ export interface IFormPut {
   ContactName: string;
   ContactEmail: string;
   ContactPhone: string;
-  ImageIdsToDelete: number[];
+  ImageIdsToDelete: number[] | string[];
   AddressModels: IAddressModelsJson[];
   dealModels: IDealModels[];
   imageFile: string;

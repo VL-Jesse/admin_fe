@@ -5,6 +5,7 @@ export interface IUsers {
   firstName: string;
   lastName: string;
   email: string;
+  free_membership: boolean;
 }
 
 export interface IHeaderUser {
@@ -54,6 +55,7 @@ export interface IEditUser {
   expiration: string;
   birthDate: string;
   state: string;
+  free_membership: boolean;
 }
 
 export interface IDealModels {

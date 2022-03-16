@@ -26,6 +26,7 @@ import { addBusinessSchema } from "./validation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { createBusiness, getEditBusiness, updateBusiness } from "../../../Actions/businessAction";
 import  { geocodeByAddress,getLatLng } from "react-google-places-autocomplete";
+import { FormImage } from "../../../Components/FormImage";
 
 
 export const FormBusinesses = () => {
@@ -37,6 +38,9 @@ export const FormBusinesses = () => {
   const id = useQuery(search, "id");
   const selectedData = useAppSelector((state: RootState) => state.business);
   const [address, setAddress] = useState("");
+  const [ open, setOpen ] = useState<boolean>(false);
+  const [ urlPhoto, setUrlPhoto ] = useState<string>("");
+
   const {
     handleSubmit,
     formState: { errors },
@@ -74,6 +78,7 @@ export const FormBusinesses = () => {
 
   const onSubmit = async (data: IFormPut) => {
     if(!data) return 
+    data.imageFile = urlPhoto;
     await validateLocation(data)
     if (location.pathname === path.BUSINESSESCREATE) {
       const responsePost: any = await dispatch(createBusiness(data));
@@ -144,7 +149,7 @@ export const FormBusinesses = () => {
             </Typography>
             <Grid className={classes.form}>
             <Typography variant="subtitle1"> Cover Photo: </Typography>
-            <Button variant="outlined" color="secondary">
+            <Button variant="outlined" color="secondary" onClick={()=>setOpen(true)}>
               Browse
             </Button>
             </Grid>
@@ -153,6 +158,7 @@ export const FormBusinesses = () => {
             {location.pathname === path.BUSINESSESCREATE ? "Add": "Edit"} Business
             </Button>
           </form>
+          <FormImage open={open} setOpen={setOpen} service="businesses" setUrl={setUrlPhoto}/>
           <Grid>
           <Button
               variant="text"

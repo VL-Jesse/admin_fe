@@ -40,11 +40,14 @@ export interface IOnlineDealEdit {
   description: string;
   promoCode: string;
   url: string;
-  image: {
-    id: number;
-    itemHash: string;
-    extension: string;
-  };
+  imageFile: string;
+  image: IImage | IImage[]
+  ImageIdsToDelete: number[] | null
+}
+export interface IImage {
+  id: number;
+  itemHash: string;
+  extension: string;
 }
 
 export interface IOnlineDealPost {
@@ -60,6 +63,7 @@ export interface IFormPost {
   description: string;
   promoCode: string;
   url: string;
+  imageFile: string;
 }
 
 export interface IBusinessNameResponse {
