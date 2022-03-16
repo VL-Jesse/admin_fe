@@ -104,28 +104,28 @@ export const FormBusinesses = () => {
     data.imageFile = urlPhoto ?? "";
     data.ImageIdsToDelete = deleteImage(data.images);
     await validateLocation(data);
-    // if (location.pathname === path.BUSINESSESCREATE) {
-    //   const responsePost: any = await dispatch(createBusiness(data));
-    //   if (responsePost!.payload!.success) {
-    //     Notification({
-    //       title: "Success",
-    //       message: "Business created",
-    //       type: "success",
-    //     });
-    //     return navigate(path.BUSINESSES);
-    //   }
-    // }
-    // if (location.pathname === path.BUSINESSESEDIT) {
-    //   const responsePut: any = await dispatch(updateBusiness(data));
-    //   if (responsePut!.payload!.status === 200) {
-    //     Notification({
-    //       title: "Success",
-    //       message: "Business edited",
-    //       type: "success",
-    //     });
-    //     return navigate(path.BUSINESSES);
-    //   }
-    // }
+    if (location.pathname === path.BUSINESSESCREATE) {
+      const responsePost: any = await dispatch(createBusiness(data));
+      if (responsePost!.payload!.success) {
+        Notification({
+          title: "Success",
+          message: "Business created",
+          type: "success",
+        });
+        return navigate(path.BUSINESSES);
+      }
+    }
+    if (location.pathname === path.BUSINESSESEDIT) {
+      const responsePut: any = await dispatch(updateBusiness(data));
+      if (responsePut!.payload!.status === 200) {
+        Notification({
+          title: "Success",
+          message: "Business edited",
+          type: "success",
+        });
+        return navigate(path.BUSINESSES);
+      }
+    }
   };
 
   const backHandler = () => {
