@@ -31,7 +31,9 @@ export const postOnlineDeals = async (create: IFormPost) => {
     Title: create.title,
     Description: create.description,
     PromoCode: create.promoCode,
-    Url: create.url
+    Url: create.url,
+    imageFile: create.imageFile,
+    ImageIdsToDelete: create.ImageIdsToDelete
   }
     const data = await axiosInstance.post("/api/deals/online/add", dataRequest);
     return data.data
@@ -44,7 +46,9 @@ export const putOnlineDeals = async (update: IOnlineDealEdit, id: number) => {
     Title: update.title,
     Description: update.description,
     PromoCode: update.promoCode,
-    Url: update.url
+    Url: update.url,
+    imageFile: update.imageFile,
+    ImageIdsToDelete: update.ImageIdsToDelete
   }
   const data = await axiosInstance.put(`/api/deals/online/${id}/edit`, dataRequest);
   return data

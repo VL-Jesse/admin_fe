@@ -50,5 +50,21 @@ export const useStyles = makeStyles(theme =>({
   },
   buttomBack: {
     margin: 20
+  },
+  imageContainer: {
+    overflow: "hidden",
+    maxHeight: 400,
+    maxWidth: 400,
+    minWidth: 100,
+    minHeight: 100
+  },
+  paperImage: {
+    display: "inline-flex",
+    justifyContent: "center",
+    margin: 20,
+    maxHeight: 400,
+    maxWidth: 400,
+    minWidth: 100,
+    minHeight: 100
   }
 }));

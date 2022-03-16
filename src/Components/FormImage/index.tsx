@@ -35,7 +35,7 @@ export const FormImage = ({ open, setOpen, service, setUrl }: IFormImage) => {
       setUrl(response.Location);
       Notification({
         title: "Success",
-        message: "Uploade photo",
+        message: "Upload photo",
         type: "success",
       });
       return setOpen(false);

@@ -1,10 +1,4 @@
-import {
-  Button,
-  Grid,
-  Paper,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+import { Button, Grid, Paper, TextField, Typography } from "@material-ui/core";
 import { useForm } from "react-hook-form";
 import { IoReturnDownBack } from "react-icons/io5";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -13,6 +7,7 @@ import { RootState } from "../../app/store";
 import { Sidebar } from "../../Components/Sidebar";
 import {
   IFormPost,
+  IImage,
   IOnlineDealEdit,
 } from "../../interface/onlineDealsTypes";
 import { clearEditOnlineDeal } from "../../Reducer/onlineDealsReducer";
@@ -23,7 +18,12 @@ import { useEffect, useState } from "react";
 import { Notification } from "../../Components/Notification";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { dealSchema } from "./validation";
-import { createOnlineDeals, getBussinessName, getEditOnlineDeal, updateOnlineDeals } from "../../Actions/onlineDealAction";
+import {
+  createOnlineDeals,
+  getBussinessName,
+  getEditOnlineDeal,
+  updateOnlineDeals,
+} from "../../Actions/onlineDealAction";
 import { FormImage } from "../../Components/FormImage";
 
 export const FormOnlineDeals = () => {
@@ -34,8 +34,8 @@ export const FormOnlineDeals = () => {
   const classes = useStyles();
   const id = useQuery(search, "id");
   const selectedData = useAppSelector((state: RootState) => state.onlineDeals);
- const [ open, setOpen ] = useState<boolean>(false);
-  const [ urlPhoto, setUrlPhoto ] = useState<string>("");
+  const [open, setOpen] = useState<boolean>(false);
+  const [urlPhoto, setUrlPhoto] = useState<string>("");
 
   const {
     handleSubmit,
@@ -43,7 +43,10 @@ export const FormOnlineDeals = () => {
     register,
     reset,
     control,
-  } = useForm({ defaultValues: { ...(selectedData.edit as IOnlineDealEdit) }, resolver: yupResolver(dealSchema) });
+  } = useForm({
+    defaultValues: { ...(selectedData.edit as IOnlineDealEdit) },
+    resolver: yupResolver(dealSchema),
+  });
 
   useEffect(() => {
     dispatch(getBussinessName());
@@ -58,9 +61,17 @@ export const FormOnlineDeals = () => {
     reset(selectedData.edit);
   }, [selectedData.edit]);
 
+  const deleteImage = (images: IImage): number[] => {
+    if(images && images.itemHash !== urlPhoto && urlPhoto !== ""){
+      return [images.id]
+    }
+    return [];
+  };
+
   const onSubmit = async (data: IOnlineDealEdit | IFormPost) => {
-    if(!data) return 
-    data.imageFile = urlPhoto;
+    if (!data) return;
+    data.imageFile = urlPhoto ?? "";
+    data.ImageIdsToDelete = deleteImage(data.image);
     if (location.pathname === path.ONLINEDEALSCREATE) {
       const responsePost: any = await dispatch(createOnlineDeals(data));
       if (responsePost!.payload!.success) {
@@ -147,20 +158,43 @@ export const FormOnlineDeals = () => {
                 {...register("url")}
               />
             </Grid>
+            {(selectedData.edit?.image && selectedData.edit?.image.itemHash) && (
+              <Paper
+                variant="elevation"
+                elevation={3}
+                className={classes.paperImage}
+              >
+                <img
+                  src={selectedData.edit?.image.itemHash}
+                  title="logo"
+                  alt="Cover Photo"
+                  className={classes.imageContainer}
+                />
+              </Paper>
+            )}
             <Typography variant="subtitle1"> Cover Photo: </Typography>
             <Grid className={classes.form}>
-            <Typography variant="subtitle1"> Cover Photo: </Typography>
-            <Button variant="outlined" color="secondary" onClick={()=>setOpen(true)}>
-              Browse
-            </Button>
+              <Typography variant="subtitle1"> Cover Photo: </Typography>
+              <Button
+                variant="outlined"
+                color="secondary"
+                onClick={() => setOpen(true)}
+              >
+                Browse
+              </Button>
             </Grid>
 
             <Button variant="contained" color="primary" type="submit">
-              {location.pathname === path.ONLINEDEALSCREATE ? "Add" : "Edit"}{" "}
-              New Online Deal
+              {location.pathname === path.ONLINEDEALSCREATE ? "Add new" : "Edit"}{" "}
+              Online Deal
             </Button>
           </form>
-          <FormImage open={open} setOpen={setOpen} service="online-deals" setUrl={setUrlPhoto}/>
+          <FormImage
+            open={open}
+            setOpen={setOpen}
+            service="online-deals"
+            setUrl={setUrlPhoto}
+          />
           <Grid>
             <Button
               variant="text"
