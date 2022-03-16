@@ -186,7 +186,7 @@ export const FormOnlineDeals = () => {
 
             <Button variant="contained" color="primary" type="submit">
               {location.pathname === path.ONLINEDEALSCREATE ? "Add" : "Edit"}{" "}
-              New Online Deal
+              Online Deal
             </Button>
           </form>
           <FormImage
