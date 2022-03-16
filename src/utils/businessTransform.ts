@@ -7,9 +7,9 @@ import {
 import { stringFormat } from "./dateFormat";
 
 export const BusinessTransform = (data: IEditData): IFormPut => {
-  // const imgDelete: number[] = data.addressModels[0].images.map(
-  //   (img: IImages) => img.id
-  // );
+  const imgDelete: number[] = data.addressModels[0].images.map(
+    (img: IImages) => img.id
+  );
     const newHours = stringFormat(data.addressModels[0].workingHours);
     const address: IAddressModelsJson[] = [{
       addressLine: data.addressModels[0].addressLine,
@@ -33,9 +33,9 @@ export const BusinessTransform = (data: IEditData): IFormPut => {
     ContactName: data.contactName,
     ContactEmail: data.contactEmail,
     ContactPhone: data.contactPhone,
-    ImageIdsToDelete:[],
+    ImageIdsToDelete: imgDelete,
     AddressModels: address,
     dealModels: data.dealsModels,
-    imageFile: "", // falta
+    imageFile: "",
   };
 };
