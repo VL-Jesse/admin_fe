@@ -92,7 +92,7 @@ export const FormBusinesses = () => {
     if (!images)  return [];
     let result: number[] = []
      images.forEach((img: IImage) => {
-      if(img.itemHash === urlPhoto && urlPhoto !== "") {
+      if(img.itemHash !== urlPhoto && urlPhoto !== "") {
         result.push(img.id)
       }
     })
