@@ -8,7 +8,8 @@ import { useForm } from "react-hook-form";
 import { Grid, TextField, Typography } from "@material-ui/core";
 import { postPhotoService } from "../../service/uploadPhoto";
 import { Notification } from "../../Components/Notification";
-
+import { yupResolver } from "@hookform/resolvers/yup";
+import { photoSchema } from "./validation";
 
 export const FormImage = ({ open, setOpen, service, setUrl }: IFormImage) => {
   const classes = useStyles();
@@ -16,40 +17,40 @@ export const FormImage = ({ open, setOpen, service, setUrl }: IFormImage) => {
     handleSubmit,
     formState: { errors },
     register,
-  } = useForm({defaultValues:{description: "", file: null}});
+  } = useForm({ defaultValues: { description: "", file: null } , resolver: yupResolver(photoSchema) });
 
-  const onSubmit = async (form: any) => {
+  const onSubmit = async (form: { description: string; file: any }) => {
     const type = form.file[0].type as string;
-    if (!type.includes("image")) return 
+    if (!type.includes("image")) return;
     const newExtension = type.replace("image/", "") as string;
     const convertedFile = await convertToBase64(form.file[0]);
-    const data:IFormImageData  = {
-    extension: newExtension,
-    description: form.description,
-    file: convertedFile as any,
-    service 
-    }
-    const response = await postPhotoService(data)
-    if(response.url){
-    setUrl(response.url)
-    Notification({
+    const data: IFormImageData = {
+      extension: newExtension,
+      description: form.description,
+      file: convertedFile as any,
+      service,
+    };
+    const response = await postPhotoService(data);
+    if (response.Location) {
+      setUrl(response.Location);
+      Notification({
         title: "Success",
         message: "Uploade photo",
         type: "success",
       });
-      return setOpen(false)
+      return setOpen(false);
     }
   };
 
   const convertToBase64 = (file: any) => {
-    return new Promise(resolve => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => {
-            resolve(reader.result);
-        }
-    })
-}
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        resolve(reader.result);
+      };
+    });
+  };
 
   return (
     <div>
@@ -78,8 +79,9 @@ export const FormImage = ({ open, setOpen, service, setUrl }: IFormImage) => {
                 {...register("file")}
                 required
               />
-              {!!errors["file"] }
-              <Button
+            </Grid>
+            <Grid className={classes.buttonContainer}>
+            <Button
                 onClick={() => setOpen(false)}
                 color="secondary"
                 variant="contained"
@@ -94,6 +96,7 @@ export const FormImage = ({ open, setOpen, service, setUrl }: IFormImage) => {
               >
                 Submit
               </Button>
+
             </Grid>
           </form>
         </DialogActions>

@@ -22,11 +22,17 @@ export const useStyles = makeStyles(theme =>({
     gridTemplateColumns: "repeat(2,1fr)",
     rowGap: 10,
     marginBottom: 20,
-    marginTop: 20,
+    padding:10
   },
   title: {
     color: defaultColor.orange,
     fontWeight: "bold",
     marginTop: 10
   },
+  buttonContainer: {
+    marginTop: 10,
+    margin: 10,
+    display: "flex",
+    justifyContent: "space-between",
+  }
 }));
