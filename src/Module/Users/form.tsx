@@ -50,14 +50,14 @@ export const FormUser = () => {
   const onSubmit = async (data: IUsers | IEditUser) => {
     if (location.pathname === path.USERCREATE) {
       const responsePost: any = await dispatch(createUser(data));
-      if (responsePost!.payload!.status) {
+      if (!responsePost.payload!.isAxiosError) {
         Notification({title: "Success", message:"User created", type: "success"})
         return navigate(path.USER)
       }
     }
     if (location.pathname === path.USEREDIT) {
       const responsePost: any = await dispatch(updateUser(data as IEditUser));
-      if (responsePost!.payload!.status) {
+      if (!responsePost.payload!.isAxiosError) {
         Notification({title: "Success", message:"User edited", type: "success"})
         return navigate(path.USER)
       }
