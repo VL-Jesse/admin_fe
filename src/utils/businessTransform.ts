@@ -30,7 +30,7 @@ export const BusinessTransform = (data: IEditData): IFormPut => {
     ContactEmail: data.contactEmail,
     ContactPhone: data.contactPhone,
     ImageIdsToDelete: [],
-    images: data.addressModels[0].images,
+    images: data.images,
     AddressModels: address,
     dealModels: data.dealsModels,
     imageFile: data.imageFile,

@@ -144,6 +144,7 @@ export interface IEditData {
   addressModels: IAddressModels[];
   dealsModels: IDealModels[];
   imageFile: string;
+  images: IImage[];
 }
 
 export interface IAddressModels {
