@@ -89,7 +89,7 @@ export const FormBusinesses = () => {
 
   const onSubmit = async (data: IFormPut) => {
     if (!data) return;
-    data.imageFile = urlPhoto;
+    data.imageFile = urlPhoto ?? "";
     await validateLocation(data);
     if (location.pathname === path.BUSINESSESCREATE) {
       const responsePost: any = await dispatch(createBusiness(data));

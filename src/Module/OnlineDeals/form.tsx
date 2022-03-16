@@ -60,7 +60,8 @@ export const FormOnlineDeals = () => {
 
   const onSubmit = async (data: IOnlineDealEdit | IFormPost) => {
     if(!data) return 
-    data.imageFile = urlPhoto;
+    debugger
+    data.imageFile = urlPhoto ?? "";
     if (location.pathname === path.ONLINEDEALSCREATE) {
       const responsePost: any = await dispatch(createOnlineDeals(data));
       if (responsePost!.payload!.success) {
@@ -147,6 +148,20 @@ export const FormOnlineDeals = () => {
                 {...register("url")}
               />
             </Grid>
+            {selectedData.edit?.imageFile && (
+              <Paper
+                variant="elevation"
+                elevation={3}
+                className={classes.paperImage}
+              >
+                <img
+                  src={selectedData.edit?.imageFile}
+                  title="logo"
+                  alt="Cover Photo"
+                  className={classes.imageContainer}
+                />
+              </Paper>
+            )}
             <Typography variant="subtitle1"> Cover Photo: </Typography>
             <Grid className={classes.form}>
             <Typography variant="subtitle1"> Cover Photo: </Typography>
