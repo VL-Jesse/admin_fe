@@ -5,13 +5,13 @@ import {
   Paper,
   Typography,
 } from "@material-ui/core";
-import { useForm,  } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { IoReturnDownBack } from "react-icons/io5";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { RootState } from "../../../app/store";
 import { Sidebar } from "../../../Components/Sidebar";
-import {  IFormPut } from "../../../interface/businessTypes";
+import { IFormPut } from "../../../interface/businessTypes";
 import { clearEditBusiness } from "../../../Reducer/businessReducer";
 import { path } from "../../../Routes/path";
 import { useQuery } from "../../../utils/getQuery";
@@ -24,10 +24,13 @@ import { useEffect, useState } from "react";
 import { Location } from "../../../Components/Location";
 import { addBusinessSchema } from "./validation";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { createBusiness, getEditBusiness, updateBusiness } from "../../../Actions/businessAction";
-import  { geocodeByAddress,getLatLng } from "react-google-places-autocomplete";
+import {
+  createBusiness,
+  getEditBusiness,
+  updateBusiness,
+} from "../../../Actions/businessAction";
+import { geocodeByAddress, getLatLng } from "react-google-places-autocomplete";
 import { FormImage } from "../../../Components/FormImage";
-
 
 export const FormBusinesses = () => {
   const { search } = useLocation();
@@ -38,8 +41,8 @@ export const FormBusinesses = () => {
   const id = useQuery(search, "id");
   const selectedData = useAppSelector((state: RootState) => state.business);
   const [address, setAddress] = useState("");
-  const [ open, setOpen ] = useState<boolean>(false);
-  const [ urlPhoto, setUrlPhoto ] = useState<string>("");
+  const [open, setOpen] = useState<boolean>(false);
+  const [urlPhoto, setUrlPhoto] = useState<string>("");
 
   const {
     handleSubmit,
@@ -48,8 +51,10 @@ export const FormBusinesses = () => {
     register,
     reset,
     setValue,
-  } = useForm({ defaultValues: { ...(selectedData.edit as IFormPut) }, resolver: yupResolver(addBusinessSchema)});
- 
+  } = useForm({
+    defaultValues: { ...(selectedData.edit as IFormPut) },
+    resolver: yupResolver(addBusinessSchema),
+  });
 
   useEffect(() => {
     if (location.pathname === path.BUSINESSESEDIT && !id) {
@@ -64,22 +69,28 @@ export const FormBusinesses = () => {
   }, [selectedData.edit]);
 
   const validateLocation = async (data: IFormPut) => {
-    const location = data.AddressModels[0].location
-    const address = data.AddressModels[0]
-    if(!location.latitude || location.longitude) {
-      const addressLocation = address.addressLine +","+ address.city +","+ address.state +","+address.zipCode as string
-      const locationAddress = await geocodeByAddress(addressLocation)
-      const latLong = await getLatLng(locationAddress[0] )
-      data.AddressModels[0].location.latitude =latLong.lat
-      data.AddressModels[0].location.longitude =latLong.lng
+    const location = data.AddressModels[0].location;
+    const address = data.AddressModels[0];
+    if (!location.latitude || location.longitude) {
+      const addressLocation = (address.addressLine +
+        "," +
+        address.city +
+        "," +
+        address.state +
+        "," +
+        address.zipCode) as string;
+      const locationAddress = await geocodeByAddress(addressLocation);
+      const latLong = await getLatLng(locationAddress[0]);
+      data.AddressModels[0].location.latitude = latLong.lat;
+      data.AddressModels[0].location.longitude = latLong.lng;
     }
-    return 
-  }
+    return;
+  };
 
   const onSubmit = async (data: IFormPut) => {
-    if(!data) return 
+    if (!data) return;
     data.imageFile = urlPhoto;
-    await validateLocation(data)
+    await validateLocation(data);
     if (location.pathname === path.BUSINESSESCREATE) {
       const responsePost: any = await dispatch(createBusiness(data));
       if (responsePost!.payload!.success) {
@@ -92,9 +103,7 @@ export const FormBusinesses = () => {
       }
     }
     if (location.pathname === path.BUSINESSESEDIT) {
-      const responsePut: any = await dispatch(
-        updateBusiness(data)
-      );
+      const responsePut: any = await dispatch(updateBusiness(data));
       if (responsePut!.payload!.status === 200) {
         Notification({
           title: "Success",
@@ -121,7 +130,11 @@ export const FormBusinesses = () => {
           <Grid container className={classes.form}>
             <Typography variant="subtitle1"> Quick address search: </Typography>
             <FormControl fullWidth>
-            <Location address={address} setAddress={setAddress} setValue={setValue}/>
+              <Location
+                address={address}
+                setAddress={setAddress}
+                setValue={setValue}
+              />
             </FormControl>
           </Grid>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -143,24 +156,58 @@ export const FormBusinesses = () => {
             <Typography variant="h5" className={classes.title}>
               Deals
             </Typography>
-            <FormDeals register={register} errors={errors} control={control} setValue={setValue}/>
+            <FormDeals
+              register={register}
+              errors={errors}
+              control={control}
+              setValue={setValue}
+            />
             <Typography variant="h5" className={classes.title}>
               Assets
             </Typography>
+            {selectedData.edit?.imageFile && (
+              <Paper
+                variant="elevation"
+                elevation={3}
+                className={classes.paperImage}
+              >
+                <img
+                  src={selectedData.edit?.imageFile}
+                  title="logo"
+                  alt="Cover Photo"
+                  className={classes.imageContainer}
+                />
+              </Paper>
+            )}
             <Grid className={classes.form}>
-            <Typography variant="subtitle1"> Cover Photo: </Typography>
-            <Button variant="outlined" color="secondary" onClick={()=>setOpen(true)}>
-              Browse
-            </Button>
+              <Typography variant="subtitle1"> Cover Photo: </Typography>
+              <Button
+                variant="outlined"
+                color="secondary"
+                onClick={() => setOpen(true)}
+              >
+                Browse
+              </Button>
             </Grid>
 
-            <Button variant="contained" color="primary" type="submit" className={classes.margiButton}>
-            {location.pathname === path.BUSINESSESCREATE ? "Add": "Edit"} Business
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit"
+              className={classes.margiButton}
+            >
+              {location.pathname === path.BUSINESSESCREATE ? "Add" : "Edit"}{" "}
+              Business
             </Button>
           </form>
-          <FormImage open={open} setOpen={setOpen} service="businesses" setUrl={setUrlPhoto}/>
+          <FormImage
+            open={open}
+            setOpen={setOpen}
+            service="businesses"
+            setUrl={setUrlPhoto}
+          />
           <Grid>
-          <Button
+            <Button
               variant="text"
               className={classes.buttomBack}
               onClick={() => backHandler()}
