@@ -2,7 +2,6 @@ import {
   IAddressModelsJson,
   IEditData,
   IFormPut,
-  IImages,
 } from "../interface/businessTypes";
 import { stringFormat } from "./dateFormat";
 
@@ -19,12 +18,6 @@ export const BusinessTransform = (data: IEditData): IFormPut => {
         longitude: null
       }
     }];
-    let imgDelete: number[] = []
-    if(data.addressModels[0].images){
-      imgDelete =  data.addressModels[0].images.map(
-        (img: IImages) => img.id
-      );
-    }
 
   return {
     businessAddressId: data.businessId,
@@ -36,7 +29,8 @@ export const BusinessTransform = (data: IEditData): IFormPut => {
     ContactName: data.contactName,
     ContactEmail: data.contactEmail,
     ContactPhone: data.contactPhone,
-    ImageIdsToDelete: imgDelete,
+    ImageIdsToDelete: [],
+    images: data.images,
     AddressModels: address,
     dealModels: data.dealsModels,
     imageFile: data.imageFile,
