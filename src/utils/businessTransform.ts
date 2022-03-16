@@ -39,6 +39,6 @@ export const BusinessTransform = (data: IEditData): IFormPut => {
     ImageIdsToDelete: imgDelete,
     AddressModels: address,
     dealModels: data.dealsModels,
-    imageFile: "",
+    imageFile: data.imageFile,
   };
 };
