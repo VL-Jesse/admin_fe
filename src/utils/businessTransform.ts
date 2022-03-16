@@ -7,9 +7,6 @@ import {
 import { stringFormat } from "./dateFormat";
 
 export const BusinessTransform = (data: IEditData): IFormPut => {
-  const imgDelete: number[] = data.addressModels[0].images.map(
-    (img: IImages) => img.id
-  );
     const newHours = stringFormat(data.addressModels[0].workingHours);
     const address: IAddressModelsJson[] = [{
       addressLine: data.addressModels[0].addressLine,
@@ -22,6 +19,12 @@ export const BusinessTransform = (data: IEditData): IFormPut => {
         longitude: null
       }
     }];
+    let imgDelete: number[] = []
+    if(data.addressModels[0].images){
+      imgDelete =  data.addressModels[0].images.map(
+        (img: IImages) => img.id
+      );
+    }
 
   return {
     businessAddressId: data.businessId,
