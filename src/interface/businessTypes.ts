@@ -141,6 +141,7 @@ export interface IEditData {
   contactPhone: string;
   addressModels: IAddressModels[];
   dealsModels: IDealModels[];
+  imageFile: string
 }
 
 export interface IAddressModels {
