@@ -41,8 +41,8 @@ export interface IOnlineDealEdit {
   promoCode: string;
   url: string;
   imageFile: string;
-  image: IImage | IImage[]
-  ImageIdsToDelete: number[] | null
+  image: IImage;
+  ImageIdsToDelete: number[] | null;
 }
 export interface IImage {
   id: number;
@@ -57,6 +57,7 @@ export interface IOnlineDealPost {
   PromoCode: string;
   Url: string;
   imageFile: string;
+  ImageIdsToDelete: number[] | null;
 }
 export interface IFormPost {
   businessName: string;
@@ -65,10 +66,12 @@ export interface IFormPost {
   promoCode: string;
   url: string;
   imageFile: string;
+  image: IImage;
+  ImageIdsToDelete: number[] | null;
 }
 
 export interface IBusinessNameResponse {
-  0: {businessNameWithIds: IBusinessName[]}
+  0: { businessNameWithIds: IBusinessName[] };
 }
 
 export interface IBusinessName {
