@@ -158,7 +158,7 @@ export const FormOnlineDeals = () => {
                 {...register("url")}
               />
             </Grid>
-            {selectedData.edit?.image.itemHash && (
+            {(selectedData.edit?.image && selectedData.edit?.image.itemHash) && (
               <Paper
                 variant="elevation"
                 elevation={3}

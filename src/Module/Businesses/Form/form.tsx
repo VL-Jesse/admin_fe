@@ -178,7 +178,7 @@ export const FormBusinesses = () => {
             <Typography variant="h5" className={classes.title}>
               Assets
             </Typography>
-            {selectedData.edit?.images?.[0].itemHash && (
+            {(selectedData.edit?.images && selectedData.edit?.images?.[0].itemHash) && (
               <Paper
                 variant="elevation"
                 elevation={3}
