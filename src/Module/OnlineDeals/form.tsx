@@ -185,7 +185,7 @@ export const FormOnlineDeals = () => {
             </Grid>
 
             <Button variant="contained" color="primary" type="submit">
-              {location.pathname === path.ONLINEDEALSCREATE ? "Add" : "Edit"}{" "}
+              {location.pathname === path.ONLINEDEALSCREATE ? "Add new" : "Edit"}{" "}
               Online Deal
             </Button>
           </form>
